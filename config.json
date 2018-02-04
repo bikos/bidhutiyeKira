@@ -1,4 +1,4 @@
 {
- "APIKEY_IMPORT": "sdadadasadasdadadsadadadadadadadadadadadadadadadadadadadadada", //put apiKey here
- "APISECRET_IMPORT":  "sdadadasadasdadadsadadadadadadadadadadadadadadadadadadadadada" //put api Secret key here
+ "APIKEY_IMPORT": "<your Key here>", 
+ "APISECRET_IMPORT":  "<your Secret key here>" 
 }
