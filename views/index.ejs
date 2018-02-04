@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Test</title>
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="stylesheet" type="text/css" href="/css/jqueryUI.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+  <link href="/css/select2.min.css" rel="stylesheet"/>
+  <script src="/scripts/select2.min.js"></script>
+  <script src="/scripts/services.js"></script>
+  <script src="/scripts/moment.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+    crossorigin="anonymous"></script>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+<div class="centerBlock">
+<h1>BOTs of the Bots</h1>
+</div>
+
+<div class="centerBlock">
+<h2>Select Menu</h2>
+<select id="myselect" style="width: 20%">
+    <option selected="" disabled="">Select option</option>
+</select>
+</div>
+<div id="tradingBox" style="display:none" class="tradeBox centerBlock">
+  <div>
+    <p id="tradeText"></p>
+  </div>
+  
+</div>
+<div class="centerBlock">
+    <a style="margin-top:50px" class="ui-button" href="/nothing">Check Balanace</a>
+    <a style="margin-top:50px" class="ui-button" href="/nothing">View Active Order</a>
+    <a style="margin-top:50px" class="ui-button" href="/nothing">View Order History</a>
+    <a style="margin-top:50px" class="ui-button" href="/nothing">View Transaction History</a>
+    </div>
+<div style="display:none" id="dialog-message" title="">
+  <ul id="detailList" style="">
+    <li id="priceUSD"></li>
+    <li id="priceBTC"></li>
+    <li id="1hr"></li>
+    <li id="24hr"></li>
+    <li id="7day"></li>
+    <li id="updated"></li>
+    <ul>
+
+</div>
+
+
+</body>
+
+</html>
+
+
