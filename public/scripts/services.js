@@ -5,9 +5,18 @@ var services = {
             url: '/balance',
             data: {name :symbol},
         }).done(function(response){
-            console.log("BALANCE RESPONSE "+symbol);
-            console.log(response.symbol);
+           
             $("#tradeText").html("Trading now "+ symbol);
+            console.log(response);
+            if(response=="NOT FOUND"){
+                $("#balances").hide();
+                $("#error").show();
+                $("#error").html("Sorry "+symbol+" trading not avaliable yet");
+            }
+            else{
+                $("#error").hide();
+                $("#balances").html("Your available balance is "+response.available);
+            }
             $("#tradingBox").show();
         });
     }

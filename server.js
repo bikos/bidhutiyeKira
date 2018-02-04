@@ -32,7 +32,7 @@ app.get('/', function (req, res) { // get crap controller
 
 
 app.get('/nothing', function(req,res){ // pass the rendered page name and the values if param, just like JSP.. 
-  res.render('nothing', {param: "bro this dope"});
+  res.render('nothing', {param: "reserving place, nothing significant going on here"});
 });
 
 
@@ -58,8 +58,14 @@ app.post('/balance', function(req,res){
   var symName = req.body.name;    // {name: symbol} is passed on from the front end
   console.log("Printing balance request for "+symName);
   binance.balance((error, balances) => {
-    console.log(balances);
-    res.json(balances);
+    console.log(balances[symName]);
+    if(balances[symName]){
+      res.json(balances[symName]);
+    }
+    else{
+      res.json("NOT FOUND");
+    }
+    
   });
 });
 
