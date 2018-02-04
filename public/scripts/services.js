@@ -15,6 +15,7 @@ var services = {
             }
             else{
                 $("#error").hide();
+                $("#balances").show();
                 $("#balances").html("Your available balance is "+response.available);
             }
             $("#tradingBox").show();
