@@ -106,5 +106,6 @@ background-color: #2ca554 !important;
   border:1px solid rgb(179, 177, 177);
   border-radius: 15px;
   height: 400px;
+  overflow: scroll;
  
 }

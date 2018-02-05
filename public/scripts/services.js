@@ -5,20 +5,42 @@ var services = {
             url: '/balance',
             data: {name :symbol},
         }).done(function(response){
-           
-            $("#tradeText").html("Trading now "+ symbol);
-            console.log(response);
-            if(response=="NOT FOUND"){
-                $("#balances").hide();
-                $("#error").show();
-                $("#error").html("Sorry "+symbol+" trading not avaliable yet");
-            }
-            else{
+        if(symbol != undefined){
+                $("#tradeText").html("Trading now "+ symbol);
+                console.log(response);
+                if(response=="NOT FOUND"){
+                    $("#balances").hide();
+                    $("#error").show();
+                    $("#error").html("Sorry "+symbol+" trading not avaliable yet");
+                }
+                else{
+                    $("#error").hide();
+                    $("#balances").empty();
+                    $("#balances").show();
+                    $("#balances").html("<p>Your available balance is "+response.available+"</p>");
+                }
+            }else{
                 $("#error").hide();
-                $("#balances").show();
-                $("#balances").html("Your available balance is "+response.available);
+                $("#balances p").remove();
+                $("#tradeText").empty();
+                console.log(response);
+                $("#tradeText").append("Your Available Balances");
+                var stringList = "";
+                var listOfKeys = Object.keys(response);
+                for(var i = 0; i < listOfKeys.length; i++){
+                var tempName =  listOfKeys[i];
+                if(response[tempName].available>0){
+                    stringList+="<div>"+listOfKeys[i]+" "+response[tempName].available+"</div>";
+                }   
+                }
+                if(stringList.length==0){
+                    stringList+="Bro! you broke?";
+                }
+                $("#balances").append("<div id=\"listOfBalances\"></div>");
+                $("#listOfBalances").append(stringList);
             }
             $("#tradingBox").show();
+
         });
     }
 };
@@ -40,6 +62,10 @@ $.get('/menu', function(data){
 // EVENT BASED OPERATIONS
 $(document).on("click", "#calcButton", function () {
 $.get('/nothing', function (data) {});
+});
+
+$(document).on("click", "#fullBalance", function(){
+services.trade();    //pass nothing as param, returns full list, operate on this return type to find full balance
 });
 
 jQuery('#myselect').on('change', (function () {
