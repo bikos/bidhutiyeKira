@@ -1,5 +1,5 @@
 var services = {
-    trade : function(symbol){
+    balance : function(symbol){
         $.ajax({
             type: "POST",
             url: '/balance',
@@ -9,9 +9,11 @@ var services = {
                 $("#tradeText").html("Trading now "+ symbol);
                 console.log(response);
                 if(response=="NOT FOUND"){
-                    $("#balances").hide();
+                    $("#listOfBalances").empty();
+                    $("#balances p").remove();
                     $("#error").show();
                     $("#error").html("Sorry "+symbol+" trading not avaliable yet");
+                    $("#balances").hide();
                 }
                 else{
                     $("#error").hide();
@@ -20,9 +22,10 @@ var services = {
                     $("#balances").html("<p>Your available balance is "+response.available+"</p>");
                 }
             }else{
-                $("#error").hide();
+                $("#listOfBalances").empty();
                 $("#balances p").remove();
                 $("#tradeText").empty();
+                $("#error").hide();
                 console.log(response);
                 $("#tradeText").append("Your Available Balances");
                 var stringList = "";
@@ -30,19 +33,81 @@ var services = {
                 for(var i = 0; i < listOfKeys.length; i++){
                 var tempName =  listOfKeys[i];
                 if(response[tempName].available>0){
-                    stringList+="<div>"+listOfKeys[i]+" "+response[tempName].available+"</div>";
+                    stringList+="<div class=\"cList\"><span style=\"margin-right:50px;\"><b>"+listOfKeys[i]+"</b></span> "+parseFloat(response[tempName].available).toFixed(3)+"</div>";
                 }   
                 }
                 if(stringList.length==0){
-                    stringList+="Bro! you broke?";
+                    stringList+="<div class=\"cList\">Bro you broke?</div>";
                 }
                 $("#balances").append("<div id=\"listOfBalances\"></div>");
                 $("#listOfBalances").append(stringList);
             }
             $("#tradingBox").show();
+            $("#balances").show();
 
         });
-    }
+    },
+    activeOrder :function(){
+        $.ajax({
+            type: "POST",
+            url: '/activeOrder',
+        }).done(function(response){
+            $("#balances p").remove();
+            $("#tradeText").empty();
+            $("#listOfBalances").empty();
+            $("#error").hide();
+            console.log(response);
+            $("#tradeText").append("Your Active Trades");
+            var stringList = "";
+            var listOfKeys = Object.keys(response);
+            for(var i = 0; i < listOfKeys.length; i++){
+            var tempName =  listOfKeys[i];
+            {
+                stringList+="<div class=\"cList\"><span style=\"margin-right:50px;\"><b>"+listOfKeys[i]+"</b></span> "+parseFloat(response[tempName].available).toFixed(3)+"</div>";
+            }   
+            }
+            if(stringList.length==0){
+                stringList+="<div class=\"cList\">Bro do you even trade?</div>";
+            }
+            $("#balances").append("<div id=\"listOfBalances\"></div>");
+            $("#listOfBalances").append(stringList);
+            $("#tradingBox").show();
+            $("#balances").show();
+        });
+
+    },
+
+    depositHistory : function(){
+        $.ajax({
+            type: "POST",
+            url: '/depositHistory',
+        }).done(function(response){
+            $("#balances p").remove();
+            $("#tradeText").empty();
+            $("#listOfBalances").empty();
+            $("#error").hide();
+            $("#tradeText").append("Your Deposit History");
+            var stringList = "";
+            //
+            console.log(response);
+            for(var i = 0; i < response.depositList.length; i++){
+           {
+               var localDate = new Date(response.depositList[i].insertTime);
+               var dateString = localDate.getDate() +"/"+ (localDate.getMonth()+1)+"/"+localDate.getFullYear();
+                stringList+="<div class=\"cList\">Deposited <b>"+response.depositList[i].amount+" "+response.depositList[i].asset+"</b> From "+response.depositList[i].address+" on "+dateString+"</div>";
+            }   
+            }
+            if(stringList.length==0){
+                stringList+="<div class=\"cList\">Opps!! Nothing was deposited yo!.</div>";
+            }
+
+            //
+            $("#balances").append("<div id=\"listOfBalances\"></div>");
+            $("#listOfBalances").append(stringList);
+            $("#tradingBox").show();
+            $("#balances").show();
+        });
+    },
 };
 
 $(document).ready(function () {
@@ -65,7 +130,15 @@ $.get('/nothing', function (data) {});
 });
 
 $(document).on("click", "#fullBalance", function(){
-services.trade();    //pass nothing as param, returns full list, operate on this return type to find full balance
+services.balance();    //pass nothing as param, returns full list, operate on this return type to find full balance
+});
+
+$(document).on("click", "#activeOrder", function(){
+services.activeOrder();    
+});
+
+$(document).on("click", "#depositHistory", function(){
+services.depositHistory();    
 });
 
 jQuery('#myselect').on('change', (function () {
@@ -98,7 +171,7 @@ jQuery('#myselect').on('change', (function () {
             Trade: {
                     click: function () {
                         $(this).dialog("close");
-                        services.trade(response[0].symbol);   //main trading UI builder
+                        services.balance(response[0].symbol);   //main trading UI builder
                     },
                     text: 'Trade',
                     class: 'trade-class'

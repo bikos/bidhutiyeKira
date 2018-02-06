@@ -79,6 +79,20 @@ app.post('/balance', function (req, res) {
   });
 });
 
+app.post('/activeOrder', function(req, res){
+  binance.openOrders(false, (error, openOrders) => {
+    console.log("Fecthing total active orders");
+    res.json(openOrders);
+  });
+});
+
+app.post('/depositHistory', function(req, res){
+  binance.depositHistory((error, response) => {
+    console.log("Fetching deposit History");
+    res.json(response);
+  });
+});
+
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });

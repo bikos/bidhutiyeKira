@@ -109,3 +109,6 @@ background-color: #2ca554 !important;
   overflow: scroll;
  
 }
+
+.cList { background: rgb(238, 241, 245); font-weight: bold; height: 30px; line-height: 35px; }
+.cList:nth-child(odd) { background: rgb(214, 226, 231); }
