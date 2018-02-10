@@ -1,5 +1,13 @@
 var services = {
+    app : {
+        balances : [],
+        lowPercentage : null,
+        highPercentage : null,
+        hour : null,
+        tradePair : null,
+    },
     balance : function(symbol){
+        var dfd  = jQuery.Deferred();
         $.ajax({
             type: "POST",
             url: '/balance',
@@ -27,6 +35,7 @@ var services = {
                 $("#tradeText").empty();
                 $("#error").hide();
                 console.log(response);
+                services.app.balances = response;
                 $("#tradeText").append("Your Available Balances");
                 var stringList = "";
                 var listOfKeys = Object.keys(response);
@@ -44,7 +53,8 @@ var services = {
             }
             $("#tradingBox").show();
             $("#balances").show();
-
+            dfd.resolve( "hurray" );
+            return dfd.promise();
         });
     },
     activeOrder :function(){
@@ -110,11 +120,14 @@ var services = {
     },
 };
 
-$(document).ready(function () {
 
+ // JQUERY EVENTS 
+$(document).ready(function () {
 
 //intialize in the starting, clicking should resort it as well
 // could be timed out automatically to update lists
+services.balance();
+
 $.get('/menu', function(data){
     var option =  "";
     for (var i = 0; i < data.globalMenu.length; i++) {
@@ -139,6 +152,51 @@ services.activeOrder();
 
 $(document).on("click", "#depositHistory", function(){
 services.depositHistory();    
+});
+
+$(document).on("click", "#goMad", function(){
+    $( "#dailog-goMad" ).dialog({
+        title: "GOING INSANE",
+        maxWidth:700,
+        maxHeight: 600,
+        width: 700,
+        height: 600,
+        modal: true,
+    });
+
+});
+
+$(document).on("click", "#btc", function(){
+    $("#weapon").html("BTC "+services.app.balances.BTC.available);
+    services.app.tradePair= "BTC";
+});
+
+$(document).on("click", "#eth", function(){
+    $("#weapon").html("ETH "+services.app.balances.ETH.available);
+    services.app.tradePair = "ETH";
+
+});
+
+$(document).on("change", "#severity", function () {
+    val = $(this).val();
+    $("#greedVal").html(val+"%");
+    services.app.highPercentage = val;
+});
+
+$(document).on("change", "#lowPercentage", function(){
+    val = $(this).val();
+    services.app.lowPercentage = val;
+    $("#lowSelect").html(val);
+});
+
+$(document).on("click", ".timeButton", function(){
+    val = parseInt($(this).attr("value"));
+    services.app.hour = val;
+    var stringTime = "Hour(s)";
+    if(val==7){
+        stringTime ="Days";
+    }
+    $("#timeRange").html(val+" "+stringTime);
 });
 
 jQuery('#myselect').on('change', (function () {
