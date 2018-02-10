@@ -26,6 +26,10 @@
 <select id="myselect" style="width: 20%">
     <option selected="" disabled="">Select option</option>
 </select>
+<a style="background-color:black;border-radius:20px" class="ui-button" id="goMad">
+  <img src="/images/flames.gif">
+  <div>GO MAD!</div>
+</a>
 </div>
 <div id="tradingBox" style="display:none" class="tradeBox centerBlock">
   <div>
@@ -33,7 +37,6 @@
     <div style="display:none" id="error"></div>
     <div id="balances"></div>
   </div>
-  
 </div>
 <div class="centerBlock">
     <a style="margin-top:50px" class="ui-button" id="fullBalance">Check Balanace</a>
@@ -42,7 +45,7 @@
     <a style="margin-top:50px" class="ui-button" id="withdrawlHistory">Withdrawl History</a>
     </div>
 <div style="display:none" id="dialog-message" title="">
-  <ul id="detailList" style="">
+  <ul id="detailList" style>
     <li id="priceUSD"></li>
     <li id="priceBTC"></li>
     <li id="1hr"></li>
@@ -50,8 +53,35 @@
     <li id="7day"></li>
     <li id="updated"></li>
     <ul>
-
 </div>
+<div style="display:none" id="dailog-goMad" title="">
+    <div class="centerBlock">Set Your Greed!!</div>
+    <div style="text-algin:center; display:inline-block; width:100%; margin-left:2%; margin-bottom:40px">
+      <label for="slider-1" style="text-align:center;width:85%;margin-left:15px" class="adjustmentHeader">Greed Level</label>
+      <input type="range" style="width:70%" class="rangeSlider" name="slider-1" id="severity" value="0" min="0" max="100">
+      <span style="color:brown" id="greedVal">0%</span>
+    </div>
+    <div style="margin-top:-30px;margin-bottom:30px;font-size:12px" class="centerBlock"><i>This level sets the margin at which you want to sell the asset.<br>
+    As soon as this margin is reached, the asset is sold.</i></div>
+    <div style="margin-bottom:20px" class="centerBlock">Set Trade Pair!!</div>
+    <div class="centerBlock">
+    <a class="ui-button" id="btc" style="margin-right:50px">
+    <img src="/images/btc.gif" width="50px" height="50px">
+    </a>
+    <a class="ui-button" id="eth">
+    <img src="/images/eth.gif" width="50px" height="50px">
+    </a>
+    <div>
+        <img width="50px" height="50px" src="/images/knight.gif">
+        <div style="display:inline-block;vertical-align:15px;color: #E64A19;margin-left:-10px" id="weapon">select weapon!!</div>
+    </div>
+    </div>
+    <div class="centerBlock">
+    <div style="margin-bottom:20px;margin-top:30px" class="centerBlock">Buy Coins When</div>
+    Less than<input style="width:30px" id="lowPercentage" type="number">% in <a value="1" class="timeButton ui-button">1 Hour</a> <a value="24" class="timeButton ui-button">24 Hours</a> <a value="7" class="timeButton ui-button">7 Days</a>
+    <div style="margin-bottom:30px;font-size:12px" class="centerBlock"><i>Buy coin when it is less than <span id="lowSelect"></span>%</i> in <span id="timeRange"></span></div>
+    </div>
+  </div>
 
 
 </body>
