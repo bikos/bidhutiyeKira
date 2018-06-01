@@ -44,7 +44,7 @@ app.get('/nothing', function (req, res) { // pass the rendered page name and the
 
 // will have to refresh this like every 10/15 seconds
 // write this in a service so that this will run like every 10-15 seconds
-request("https://files.coinmarketcap.com/generated/search/quick_search.json", function (err, response, body) {
+request("https://s2.coinmarketcap.com/generated/search/quick_search.json", function (err, response, body) {
   console.log("Menu List of CMC sent");
   menuCollection.globalCoins = [];
   menuCollection.globalMenu = [];
